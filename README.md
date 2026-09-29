@@ -1,4 +1,4 @@
-# Poster Presentation: Context Effects on LLM Question Answering
+# Poster Presentation: When does RAG hurt?  An Experimental Study  of Different Contexts in Question Answering
 
 This repository contains the code, data, results, and figures for a poster presentation experiment studying how different context conditions affect large language model performance on short-answer question answering.
 
