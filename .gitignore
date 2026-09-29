@@ -1,0 +1,28 @@
+# Python and notebook caches
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Local configuration and credentials
+.env
+.env.*
+*.pem
+*.key
+credentials.json
+token.json
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Temporary experiment artifacts
+pilot_80_requests.jsonl
+*.tmp
+*.log
