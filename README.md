@@ -77,6 +77,39 @@ The `Screen Shorts Diagram/` folder contains compact poster-ready result graphic
 6. Compare average performance by model and condition.
 7. Analyze whether irrelevant context helps, hurts, or leaves answers unchanged compared with the no-context baseline.
 
+## Dataset Construction from SQuAD
+
+The 200-question experimental dataset was created in `Code/Data_Preparation.ipynb` from the SQuAD v1.1 validation set. The notebook does not simply take the first 200 rows. It uses a fixed random seed and filters the sample so the selected questions come from unique contexts, which makes the final set more diverse and reproducible.
+
+```mermaid
+flowchart TD
+    A[SQuAD v1.1 validation split] --> B[Load questions, titles, contexts, and gold answers]
+    B --> C[Shuffle with fixed seed: 42]
+    C --> D[Select 200 examples with unique contexts]
+    D --> E[Build random irrelevant context pool]
+    E --> F[Attach unrelated distractor context]
+    D --> G[Use TF-IDF similarity search]
+    G --> H[Attach same-article or related distractor context]
+    F --> I[Check distractors for answer leakage]
+    H --> I
+    I --> J[Manually inspect validation examples]
+    J --> K[Save squad_200_experimental_data.jsonl]
+```
+
+### Sampling Summary
+
+| Step | What Was Done | Purpose |
+|---|---|---|
+| Load SQuAD | Loaded the SQuAD v1.1 validation split using Hugging Face `datasets`. | Provides factual questions, supporting passages, titles, and gold answers. |
+| Fixed seed | Used seed `42` during sampling. | Makes the same 200-question sample reproducible. |
+| Unique contexts | Selected questions while avoiding repeated source contexts. | Prevents the sample from being dominated by duplicate or near-duplicate passages. |
+| Random distractors | Chose irrelevant passages from other examples, preferably different titles, without the gold answer. | Tests whether unrelated context hurts model answers. |
+| Related distractors | Used TF-IDF cosine similarity to find passages that look topically related but do not contain the answer. | Tests a harder irrelevant-context condition. |
+| Leakage check | Checked whether distractor contexts accidentally included gold answers. | Keeps the irrelevant-context conditions fair. |
+| Manual validation | Inspected a subset of examples before model calls. | Confirms that distractors are reasonable for the experiment. |
+
+Each final row contains the question ID, article title, question, gold answers, relevant context, random irrelevant context, related irrelevant context, and metadata about the related distractor. During the experiment, each of these 200 rows is expanded into four prompt conditions, producing 800 model requests per model.
+
 ## Main Results
 
 Average F1 scores from the final full experiment:
