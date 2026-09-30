@@ -4,6 +4,24 @@ This repository contains the code, data, results, and figures for a poster prese
 
 The experiment uses a 200-question sample derived from SQuAD v1.1 and evaluates each question under four prompt conditions, producing 800 requests per model. The final comparison includes Qwen, GPT, and DeepSeek.
 
+## Table of Contents
+
+- [Research Question](#research-question)
+- [Repository Structure](#repository-structure)
+- [Files](#files)
+  - [Code](#code)
+  - [Data](#data)
+  - [Outputs](#outputs)
+  - [Figures](#figures)
+- [Methodology](#methodology)
+- [Dataset Construction from SQuAD](#dataset-construction-from-squad)
+  - [Sampling Summary](#sampling-summary)
+- [Main Results](#main-results)
+- [Reproducing the Experiment](#reproducing-the-experiment)
+- [API Key Safety](#api-key-safety)
+- [Notes](#notes)
+- [License](#license)
+
 ## Research Question
 
 How does the presence, absence, or type of context influence an LLM's ability to answer factual questions accurately?
